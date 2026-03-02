@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>موقع الأخبار</title>
+
+<style>
+body{
+    font-family: Arial;
+    margin:0;
+    background:#f4f4f4;
+    direction:rtl;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.menu-btn{
+    font-size:24px;
+    cursor:pointer;
+}
+
+.sidebar{
+    position:fixed;
+    top:0;
+    right:-300px;
+    width:300px;
+    height:100%;
+    background:white;
+    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
+    padding:15px;
+    transition:0.3s;
+    overflow:auto;
+}
+
+.sidebar.open{
+    right:0;
+}
+
+.container{
+    padding:15px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    margin-bottom:15px;
+    overflow:hidden;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:10px;
+}
+
+button{
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:red;
+    color:white;
+}
+
+input, textarea{
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+#adminPanel{
+    display:none;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <span class="menu-btn" onclick="toggleMenu()">☰</span>
+    <span>موقع الأخبار</span>
+</header>
+
+<div class="sidebar" id="sidebar">
+
+    <button onclick="login()">دخول لوحة التحكم</button>
+
+    <div id="adminPanel">
+        <h3>إضافة خبر جديد</h3>
+        <input type="text" id="title" placeholder="عنوان الخبر">
+        <textarea id="content" placeholder="محتوى الخبر"></textarea>
+
+        <!-- رفع صورة من الهاتف -->
+        <input type="file" id="imageFile" accept="image/*">
+
+        <button onclick="addNews()">إضافة</button>
+
+        <hr>
+        <h3>حذف خبر</h3>
+        <input type="number" id="deleteIndex" placeholder="رقم الخبر للحذف">
+        <button class="delete-btn" onclick="deleteNews()">حذف</button>
+    </div>
+
+</div>
+
+<div class="container" id="newsContainer"></div>
+
+<script>
+let news = JSON.parse(localStorage.getItem("news")) || [];
+let isAdmin = false;
+
+function toggleMenu(){
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function saveNews(){
+    localStorage.setItem("news", JSON.stringify(news));
+}
+
+function loadNews(){
+    const container = document.getElementById("newsContainer");
+    container.innerHTML="";
+    news.forEach((item,index)=>{
+        container.innerHTML+=`
+        <div class="card">
+            <img src="${item.image}">
+            <div class="card-content">
+                <h3>${index} - ${item.title}</h3>
+                <p>${item.content}</p>
+            </div>
+        </div>`;
+    });
+}
+
+function login(){
+    let password = prompt("ادخل كلمة السر");
+    if(password === "05"){
+        isAdmin = true;
+        document.getElementById("adminPanel").style.display="block";
+        alert("تم الدخول بنجاح");
+    }else{
+        alert("كلمة السر خاطئة");
+    }
+}
+
+function addNews(){
+    if(!isAdmin) return;
+
+    let title = document.getElementById("title").value;
+    let content = document.getElementById("content").value;
+    let file = document.getElementById("imageFile").files[0];
+
+    if(title && content && file){
+        let reader = new FileReader();
+        reader.onload = function(e){
+            let imageBase64 = e.target.result;
+
+            news.push({
+                title:title,
+                content:content,
+                image:imageBase64
+            });
+
+            saveNews();
+            loadNews();
+            alert("تمت الإضافة");
+        };
+        reader.readAsDataURL(file);
+    }else{
+        alert("اكمل كل البيانات واختر صورة");
+    }
+}
+
+function deleteNews(){
+    if(!isAdmin) return;
+
+    let index = document.getElementById("deleteIndex").value;
+
+    if(news[index]){
+        news.splice(index,1);
+        saveNews();
+        loadNews();
+        alert("تم الحذف");
+    }
+}
+
+loadNews();
+</script>
+
+</body>
+</html>
