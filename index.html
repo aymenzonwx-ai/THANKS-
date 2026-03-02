@@ -3,205 +3,292 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>موقع الأخبار</title>
+<title>AYMEN FF</title>
 
 <style>
 body{
-    font-family: Arial;
-    margin:0;
-    background:#f4f4f4;
-    direction:rtl;
+margin:0;
+font-family:Arial;
+background:#f2f2f2;
+direction:rtl;
 }
 
 header{
-    background:#111;
-    color:white;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+background:#7b1fa2;
+color:white;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.menu-btn{
-    font-size:24px;
-    cursor:pointer;
+header h2{
+margin:0;
 }
 
-.sidebar{
-    position:fixed;
-    top:0;
-    right:-300px;
-    width:300px;
-    height:100%;
-    background:white;
-    box-shadow:-3px 0 10px rgba(0,0,0,0.2);
-    padding:15px;
-    transition:0.3s;
-    overflow:auto;
+.points{
+background:orange;
+padding:8px 15px;
+border-radius:20px;
+font-weight:bold;
 }
 
-.sidebar.open{
-    right:0;
+.menu{
+font-size:26px;
+cursor:pointer;
 }
 
-.container{
-    padding:15px;
+.section-title{
+background:#8e24aa;
+color:white;
+padding:12px;
+margin:15px;
+border-radius:8px;
+text-align:center;
 }
 
 .card{
-    background:white;
-    border-radius:10px;
-    margin-bottom:15px;
-    overflow:hidden;
-    box-shadow:0 3px 10px rgba(0,0,0,0.1);
-}
-
-.card img{
-    width:100%;
-    height:200px;
-    object-fit:cover;
-}
-
-.card-content{
-    padding:10px;
+background:white;
+margin:15px;
+padding:15px;
+border-radius:10px;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 button{
-    padding:8px 12px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
+background:#8e24aa;
+color:white;
+border:none;
+padding:8px 15px;
+border-radius:8px;
+cursor:pointer;
 }
 
-.delete-btn{
-    background:red;
-    color:white;
+input{
+width:90%;
+padding:10px;
+margin:10px;
+border-radius:6px;
+border:1px solid #ccc;
 }
 
-input, textarea{
-    width:100%;
-    padding:8px;
-    margin-bottom:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+.admin-panel{
+display:none;
+position:fixed;
+top:0;
+right:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
 }
 
-#adminPanel{
-    display:none;
+.panel-content{
+background:#fff;
+width:90%;
+max-width:400px;
+margin:50px auto;
+padding:20px;
+border-radius:10px;
+max-height:80%;
+overflow:auto;
 }
+
+.order-box{
+background:#f2f2f2;
+padding:10px;
+margin-bottom:10px;
+border-radius:6px;
+}
+
 </style>
 </head>
+
 <body>
 
 <header>
-    <span class="menu-btn" onclick="toggleMenu()">☰</span>
-    <span>موقع الأخبار</span>
+<div class="points">النقاط: <span id="points">50</span></div>
+<h2>AYMEN FF ⚡</h2>
+<div class="menu" onclick="openPanel()">☰</div>
 </header>
 
-<div class="sidebar" id="sidebar">
+<div class="section-title">🔥 شحن فوري وآمن - أفضل الأسعار</div>
 
-    <button onclick="login()">دخول لوحة التحكم</button>
+<div class="section-title">🎁 إدخال كود</div>
+<div style="text-align:center;">
+<input type="text" id="codeInput" placeholder="ادخل الكود هنا">
+<br>
+<button onclick="redeemCode()">تفعيل</button>
+</div>
 
-    <div id="adminPanel">
-        <h3>إضافة خبر جديد</h3>
-        <input type="text" id="title" placeholder="عنوان الخبر">
-        <textarea id="content" placeholder="محتوى الخبر"></textarea>
+<div class="section-title">💎 عروض الشحن</div>
 
-        <!-- رفع صورة من الهاتف -->
-        <input type="file" id="imageFile" accept="image/*">
+<div class="card">
+<span>110 جوهرة - 150 نقطة</span>
+<button onclick="buy(150)">شراء</button>
+</div>
 
-        <button onclick="addNews()">إضافة</button>
+<div class="card">
+<span>341 جوهرة - 400 نقطة</span>
+<button onclick="buy(400)">شراء</button>
+</div>
 
-        <hr>
-        <h3>حذف خبر</h3>
-        <input type="number" id="deleteIndex" placeholder="رقم الخبر للحذف">
-        <button class="delete-btn" onclick="deleteNews()">حذف</button>
-    </div>
+<div class="card">
+<span>583 جوهرة - 650 نقطة</span>
+<button onclick="buy(650)">شراء</button>
+</div>
+
+<div class="card">
+<span>1180 جوهرة - 1300 نقطة</span>
+<button onclick="buy(1300)">شراء</button>
+</div>
+
+<div class="card">
+<span>2420 جوهرة - 2500 نقطة</span>
+<button onclick="buy(2500)">شراء</button>
+</div>
+
+<div class="card">
+<span>العضوية الأسبوعية - 200 نقطة</span>
+<button onclick="buy(200)">شراء</button>
+</div>
+
+<div class="card">
+<span>العضوية الشهرية - 500 نقطة</span>
+<button onclick="buy(500)">شراء</button>
+</div>
+
+<!-- لوحة التحكم -->
+<div class="admin-panel" id="adminPanel">
+<div class="panel-content">
+
+<h3>لوحة النقط 🔐</h3>
+
+<input type="password" id="adminPass" placeholder="ادخل كلمة السر">
+<button onclick="checkLogin()">دخول</button>
+
+<div id="adminContent" style="display:none;">
+
+<h4>👤 عدد المستخدمين: <span id="usersCount">0</span></h4>
+
+<h4>📦 الطلبات:</h4>
+<div id="ordersList"></div>
 
 </div>
 
-<div class="container" id="newsContainer"></div>
+</div>
+</div>
 
 <script>
-let news = JSON.parse(localStorage.getItem("news")) || [];
-let isAdmin = false;
 
-function toggleMenu(){
-    document.getElementById("sidebar").classList.toggle("open");
+let points = 50;
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
+let users = localStorage.getItem("users") || 0;
+
+document.getElementById("usersCount").innerText = users;
+
+function updatePoints(){
+document.getElementById("points").innerText = points;
 }
 
-function saveNews(){
-    localStorage.setItem("news", JSON.stringify(news));
+function redeemCode(){
+let code = document.getElementById("codeInput").value;
+
+if(code === "A16A"){
+points += 100;
+alert("✅ تم إضافة 100 نقطة");
+}
+else if(code === "A11A"){
+if(localStorage.getItem("usedA11A")){
+alert("❌ هذا الكود استُعمل من قبل");
+return;
+}
+points += 100;
+localStorage.setItem("usedA11A", true);
+alert("✅ تم إضافة 100 نقطة (مرة واحدة)");
+}
+else{
+alert("❌ كود غير صحيح");
 }
 
-function loadNews(){
-    const container = document.getElementById("newsContainer");
-    container.innerHTML="";
-    news.forEach((item,index)=>{
-        container.innerHTML+=`
-        <div class="card">
-            <img src="${item.image}">
-            <div class="card-content">
-                <h3>${index} - ${item.title}</h3>
-                <p>${item.content}</p>
-            </div>
-        </div>`;
-    });
+updatePoints();
 }
 
-function login(){
-    let password = prompt("ادخل كلمة السر");
-    if(password === "05"){
-        isAdmin = true;
-        document.getElementById("adminPanel").style.display="block";
-        alert("تم الدخول بنجاح");
-    }else{
-        alert("كلمة السر خاطئة");
-    }
+function buy(cost){
+
+if(points < cost){
+alert("❌ ليس لديك نقاط كافية");
+return;
 }
 
-function addNews(){
-    if(!isAdmin) return;
+let id = prompt("ادخل ID اللعبة:");
 
-    let title = document.getElementById("title").value;
-    let content = document.getElementById("content").value;
-    let file = document.getElementById("imageFile").files[0];
-
-    if(title && content && file){
-        let reader = new FileReader();
-        reader.onload = function(e){
-            let imageBase64 = e.target.result;
-
-            news.push({
-                title:title,
-                content:content,
-                image:imageBase64
-            });
-
-            saveNews();
-            loadNews();
-            alert("تمت الإضافة");
-        };
-        reader.readAsDataURL(file);
-    }else{
-        alert("اكمل كل البيانات واختر صورة");
-    }
+if(!id){
+alert("❌ يجب إدخال ID");
+return;
 }
 
-function deleteNews(){
-    if(!isAdmin) return;
+points -= cost;
+updatePoints();
 
-    let index = document.getElementById("deleteIndex").value;
+let offerName = "";
 
-    if(news[index]){
-        news.splice(index,1);
-        saveNews();
-        loadNews();
-        alert("تم الحذف");
-    }
+if(cost == 150) offerName = "110 جوهرة";
+if(cost == 400) offerName = "341 جوهرة";
+if(cost == 650) offerName = "583 جوهرة";
+if(cost == 1300) offerName = "1180 جوهرة";
+if(cost == 2500) offerName = "2420 جوهرة";
+if(cost == 200) offerName = "عضوية أسبوعية";
+if(cost == 500) offerName = "عضوية شهرية";
+
+let order = {
+playerID: id,
+offer: offerName,
+price: cost,
+date: new Date().toLocaleString()
+};
+
+orders.push(order);
+localStorage.setItem("orders", JSON.stringify(orders));
+
+alert("✅ تم إرسال طلب الشحن بنجاح");
 }
 
-loadNews();
+function openPanel(){
+document.getElementById("adminPanel").style.display = "block";
+}
+
+function checkLogin(){
+let pass = document.getElementById("adminPass").value;
+
+if(pass === "1"){
+document.getElementById("adminContent").style.display = "block";
+
+let list = document.getElementById("ordersList");
+list.innerHTML = "";
+
+if(orders.length === 0){
+list.innerHTML = "لا توجد طلبات بعد";
+}else{
+orders.forEach(function(order){
+list.innerHTML += `
+<div class="order-box">
+👤 ID: ${order.playerID}<br>
+🎁 العرض: ${order.offer}<br>
+💰 السعر: ${order.price} نقطة<br>
+🕒 ${order.date}
+</div>
+`;
+});
+}
+}
+else{
+alert("❌ كلمة السر خاطئة");
+}
+}
+
 </script>
 
 </body>
